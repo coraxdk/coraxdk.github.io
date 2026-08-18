@@ -2,7 +2,7 @@
 layout: post
 title: "Dockerize a Laravel 13 application"
 categories: laravel
-tags: laravel docker hosting development
+tags: laravel docker hosting development tutorial
 image:
   path: https://cdn.coraxnet.dk/bCdOni-rAolzuJYcp2eLFymd1YOktjhtzl_ChR6Burs/rs:fill/bG9jYWw6Ly8vZG9j/a2VyLWxhcmF2ZWwt/YmFubmVyLnBuZw
 ---
