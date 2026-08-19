@@ -6,12 +6,12 @@ tags: laravel docker hosting development tutorial
 image:
   path: https://cdn.coraxnet.dk/bCdOni-rAolzuJYcp2eLFymd1YOktjhtzl_ChR6Burs/rs:fill/bG9jYWw6Ly8vZG9j/a2VyLWxhcmF2ZWwt/YmFubmVyLnBuZw
 ---
-So I was working on a Laravel application and got the idea of hosting it as a docker container on my server instead of uploading it to a hosting provider as usual. It took me a fair bit of time digging though Googles search results to find out the best method of doing so which none of them lead me to a final usable result, but they did give me hints here and there which helped me building my image in the end - but it took longer than I thought it would to be honest.<br>
-There are many tutorials on how to dockerize Laravel, but they are aither written for older versions of Laravel, or they were not as optimized as I wanted it to be.
-Trust me, you will want to optimize it. When I made my first Dockerfile for this, I just build everthing in the same image, which resultet in a whopping 2.1 Gb image, while in a multi-stage like this, we have everything we need in just around 800 Mb - so a huge difference, not to mention the amount f vulnerabilities we have limited.
+So I was working on a Laravel application and wanted to hoste it as a docker container on my server instead of uploading it to a hosting provider as usual. It took me a fair bit of time digging though Googles search results to find the best method of doing so which none of them lead me to a final usable result, but they did give me hints here and there which helped me building my image in the end - but it took a lot longer than I thought it would.<br>
+There are many tutorials on how to dockerize Laravel, but they are either written for older versions of Laravel, or they are not as optimized as I want it to be.
+Trust me, you will want to optimize it. When I made my first Dockerfile for this, I just build everthing in the same image, which resultet in a whopping 2.1 Gb image, while in a multi-stage like this, we have everything we need in just around 800 Mb - so a huge difference, not to mention the amount f vulnerabilities we have removed.
 
 ## Skip Wayfinder
-The first thing we need to do is to prevent wayfinder to run during NPM build. To do this, change the <i>vite.config.ts</i> in the root of your project, so it looks like this:
+The first thing we need to do is to prevent wayfinder from running during NPM build. To do this, change the <i>vite.config.ts</i> in the root of your project, so it looks like this:
 
 ```js
 import inertia from '@inertiajs/vite';
@@ -46,11 +46,11 @@ export default defineConfig({
     ],
 });
 ```
-If you dont do this, then it will trigger an php artisan command when building the JavaScript files, which means we would need to install PHP on the node:image, and we dont want that.
+If you don't do this, then it will trigger a php artisan command when building the JavaScript files, which means we would need to install PHP on the node image, and we dont want that.
 
 ## .dockerignore
 Next lets add a few lines to .dockerignore file in the root of the project.
-I have chosen to leave out the entire storage folder, the build and cache folders. If you are not building your image from your local development environment this wont do much difference, but since I am also building the docker image locally as well, I dont want any clutter in these folder.
+I have chosen to leave the entire storage, build and cache folders out. If you are not building your image from your local development environment this won't do much difference, but since I am I don't want any clutter in these folder.
 ```
 .git
 .gitignore
@@ -61,7 +61,6 @@ storage/*
 public/build
 bootstrap/cache
 ```
-
 
 ## Dockerfile
 Now that the project is prepared, let's build us an image.
