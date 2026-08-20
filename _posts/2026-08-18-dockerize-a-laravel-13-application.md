@@ -60,6 +60,9 @@ vendor
 storage/*
 public/build
 bootstrap/cache
+resources/js/actions
+resources/js/routes
+resources/js/wayfinder
 ```
 
 ## Dockerfile
@@ -85,6 +88,9 @@ FROM node:latest AS frontend
 WORKDIR /app
 COPY . .
 COPY --from=libraries /app/storage /app/storage
+COPY --from=libraries /app/resources/js/actions /app/resources/js/actions
+COPY --from=libraries /app/resources/js/routes /app/resources/js/routes
+COPY --from=libraries /app/resources/js/wayfinder /app/resources/js/wayfinder
 ENV SKIP_WAYFINDER=true
 RUN npm ci
 RUN npm run build
@@ -94,13 +100,13 @@ RUN npm run build
 # ============================================
 FROM php:apache
 
-# Enabling rewrite apache mod
+# Enabling rewrite
 RUN a2enmod rewrite
 
 # Enable php mod pdo_mysql (can be omitted if your are not using MySQL for database. Sqlite is already included in the image)
 RUN docker-php-ext-install pdo_mysql
 
-# Changing the document root of Apache as it will have to point to the public folder of our Laravel application
+# Changing the document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
@@ -116,27 +122,11 @@ COPY --from=frontend /app/public/build /var/www/html/public/build
 # We left out the storage dir, so lets rebuild it and set permissions
 RUN mkdir -p /var/www/html/storage/private /var/www/html/storage/public /var/www/html/storage/framework/cache /var/www/html/storage/framework/sessions
 RUN chown -R www-data:www-data /var/www/html/storage
+RUN chmod a+x docker/entrypoint.sh
 
 # Executing the entrypoint script and starts apache
 ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["apachectl", "-D", "FOREGROUND"]
-```
-
-## Entrypoint
-The last step for building our image is to create a new folder (if its not already there) called <i>docker</i>.<br>
-In this folder we will create a new file called <i>entrypoint.sh</i>
-Everything in this file will be executed every time the container starts.
-
-```bash
-#!/bin/bash
-php artisan optimize
-php artisan migrate --force
-
-if [ -f "/var/www/html/database/database.sqlite" ]; then
-  chown www-data:www-data /var/www/html/database/database.sqlite
-fi
-
-exec docker-php-entrypoint "$@"
 ```
 Its a pretty simple bash script running some artisan commands, so I think it is pretty much self explainatory.<br>
 Thats it... we are now ready for building our image!
