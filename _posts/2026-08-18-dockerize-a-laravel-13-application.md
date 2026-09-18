@@ -4,7 +4,7 @@ title: "Dockerize a Laravel 13 application"
 categories: laravel
 tags: laravel docker hosting development tutorial
 image:
-  path: https://cdn.coraxnet.dk/bCdOni-rAolzuJYcp2eLFymd1YOktjhtzl_ChR6Burs/rs:fill/bG9jYWw6Ly8vZG9j/a2VyLWxhcmF2ZWwt/YmFubmVyLnBuZw
+  path: https://cdn.coraxnet.dk/6XMoOEHCWrfxBa-saQ47mMieZWBl7RVJhkS2rFgjDIY/rs:fill/bG9jYWw6Ly8vY29y/YXhuZXQuZGsvZG9j/a2VyLWxhcmF2ZWwt/YmFubmVyLnBuZw.webp
 ---
 So I was working on a Laravel application and wanted to hoste it as a docker container on my server instead of uploading it to a hosting provider as usual. It took me a fair bit of time digging though Googles search results to find the best method of doing so which none of them lead me to a final usable result, but they did give me hints here and there which helped me building my image in the end - but it took a lot longer than I thought it would.<br>
 There are many tutorials on how to dockerize Laravel, but they are either written for older versions of Laravel, or they are not as optimized as I want it to be.

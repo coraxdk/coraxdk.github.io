@@ -99,7 +99,7 @@ theme_mode: # [light | dark]
 cdn: https://cdn.coraxnet.dk
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://cdn.coraxnet.dk/5zZYkcOHTmSylfgWA0x8O88fDzXwuXxPM7RKX4IWNmg/rs:fill:460:460:1/bG9jYWw6Ly8vNTQw/Njg1NTg3XzEwMjM0/ODQzMzEzMDM4NzY3/XzUyMjcwMDgwOTI4/Mzk1MjM4MzZfbi5q/cGc
+avatar: https://cdn.coraxnet.dk/XiaFY7QM0j-OsTqddZaVEDts_0TMBJdmFcJUIf8WIQU/rs:fill:460:460:1/bG9jYWw6Ly8vY29y/YXhuZXQuZGsvcHJv/ZmlsZV9waWN0dXJl/LmpwZw.webp
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
